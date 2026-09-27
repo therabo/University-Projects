@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane minHeight="480.0" minWidth="600.0" prefHeight="610.0" prefWidth="850.0" styleClass="app-root" stylesheets="@mail.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: #172c36; -fx-padding: 22 30 22 30;" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="M" styleClass="brand-mark" />
+                <VBox alignment="CENTER_LEFT" spacing="2.0">
+                    <children>
+                        <Label text="MAIL SERVER" styleClass="brand-name" />
+                        <Label text="Programmazione III" styleClass="brand-caption" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="24.0" BorderPane.alignment="CENTER">
+            <padding><Insets top="32.0" right="34.0" bottom="32.0" left="34.0" /></padding>
+            <children>
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="ATTIVITÀ DEL SERVER" styleClass="eyebrow" />
+                        <Label text="Console eventi" styleClass="page-title" />
+                        <Label text="Le operazioni delle caselle vengono registrate qui." styleClass="body-copy" />
+                    </children>
+                </VBox>
+                <VBox spacing="15.0" styleClass="card" VBox.vgrow="ALWAYS">
+                    <padding><Insets top="20.0" right="12.0" bottom="12.0" left="12.0" /></padding>
+                    <children>
+                        <Label text="Registro attività" styleClass="section-title">
+                            <VBox.margin><Insets left="10.0" /></VBox.margin>
+                        </Label>
+                        <ListView fx:id="listserver_view" VBox.vgrow="ALWAYS">
+                            <placeholder>
+                                <VBox alignment="CENTER" spacing="8.0">
+                                    <children>
+                                        <Label text="Nessun evento registrato" styleClass="section-title" />
+                                        <Label text="Le attività compariranno quando un client si connette." styleClass="body-copy" />
+                                    </children>
+                                </VBox>
+                            </placeholder>
+                        </ListView>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

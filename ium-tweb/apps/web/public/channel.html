@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/images/logo.png?v=2024">
+    <title>Chat Live · Football Whispers</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Deca%3A400%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Mega%3A700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C700">
+    <link rel="stylesheet" href="stylesheets/design-tokens.css">
+    <link rel="stylesheet" href="stylesheets/channel.css">
+    <link rel="stylesheet" href="stylesheets/site-header.css">
+    <link rel="stylesheet" href="stylesheets/site-footer.css">
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="javascripts/site-header.js" defer></script>
+    <script src="javascripts/channel.js" defer></script>
+    <script src="javascripts/site-footer.js" defer></script>
+</head>
+<body class="chat-page">
+<div class="container-fluid">
+    <header class="header site-header" data-site-header>
+        <div class="title-container site-header__bar">
+            <div class="container-logo site-header__brand">
+                <img class="logo" src="images/logo-homepage.png" alt="Logo Football Whisper">
+            </div>
+            <div class="link-container site-header__navigation">
+                <nav aria-label="Navigazione principale">
+                    <ul class="link-header">
+                        <li><a class="site-nav__link" href="index.html">Home</a></li>
+                        <li><a class="site-nav__link" href="channel.html" aria-current="page">Chat Live</a></li>
+                        <li><a class="site-nav__link" href="competitions.html">Campionati</a></li>
+                        <li><a class="site-nav__link" href="teams.html">Squadre</a></li>
+                        <li><a class="site-nav__link" href="players.html">Giocatori</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="search-login-container site-header__actions">
+                <button id="mostra-barra" class="search-button" type="button" aria-label="Apri la ricerca"
+                        aria-controls="barra-ricerca" aria-expanded="false" data-header-toggle="search">
+                    <img class="search-img" src="images/searchbar.png" alt="" aria-hidden="true">
+                </button>
+                <button id="mostra-opzioni" class="login-button" type="button" aria-label="Apri il menu profilo"
+                        aria-controls="opzioni-login" aria-expanded="false" aria-haspopup="menu"
+                        data-header-toggle="profile">
+                    <img class="login-img" src="images/login-img.png" alt="" aria-hidden="true">
+                </button>
+            </div>
+        </div>
+        <div class="wrap-barra-ricerca site-header__panels">
+            <div id="barra-ricerca" class="barra-ricerca-container site-header__panel site-header__panel--search"
+                 role="search" aria-label="Ricerca nel sito" aria-hidden="true" data-header-panel="search">
+                <input id="input-ricerca" type="search" placeholder="Cerca nel sito..."
+                       aria-label="Cerca giocatori, squadre o campionati" autocomplete="off">
+            </div>
+            <div class="opzioni-login-container">
+                <div id="opzioni-login" class="wrap-opzioni-login site-header__panel site-header__panel--profile"
+                     role="menu" aria-label="Menu profilo" aria-hidden="true" data-header-panel="profile">
+                    <button type="button" role="menuitem">Profilo</button>
+                    <button type="button" role="menuitem">Sicurezza</button>
+                    <button type="button" role="menuitem" data-site-logout>Log out</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="chat-layout" aria-label="Chat Live">
+        <section class="chat-rooms-panel" aria-labelledby="chat-page-title">
+            <div class="chat-panel-heading">
+                <h1 id="chat-page-title">Chat Live</h1>
+                <p>Scegli una chat</p>
+            </div>
+            <nav id="chat-room-list" class="chat-room-list" aria-label="Canali disponibili">
+                <button class="chat-room-button" type="button" data-room-id="general">Chat generale</button>
+            </nav>
+            <p id="room-list-status" class="chat-room-status" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="chat-conversation" aria-labelledby="chat-room-title">
+            <div class="chat-conversation__header">
+                <div class="chat-conversation__identity">
+                    <h2 id="chat-room-title">Seleziona un canale</h2>
+                    <p id="chat-connection-status" role="status" aria-live="polite">Connessione in corso…</p>
+                    <a id="chat-login-link" class="chat-login-link" href="login.html?next=channel.html" hidden>Accedi per partecipare</a>
+                </div>
+                <button id="chat-leave" class="chat-leave-button" type="button" disabled>Esci dal canale</button>
+            </div>
+            <div id="chat-messages" class="chat-messages" role="log" aria-label="Messaggi della chat" aria-live="polite" aria-relevant="additions" tabindex="0">
+                <p id="chat-placeholder" class="chat-placeholder">Scegli un canale per iniziare a chattare.</p>
+            </div>
+            <form id="chat-composer" class="chat-composer" aria-label="Invia un messaggio">
+                <label class="visually-hidden" for="chat-message">Messaggio</label>
+                <input id="chat-message" type="text" maxlength="1000" autocomplete="off"
+                       placeholder="Scrivi un messaggio…" disabled>
+                <button id="chat-send" type="submit" disabled>Invia</button>
+            </form>
+        </section>
+
+        <aside class="chat-presence-panel" aria-labelledby="chat-presence-title">
+            <div class="chat-presence-panel__heading">
+                <h2 id="chat-presence-title">Online</h2>
+                <span id="chat-presence-count" aria-live="polite">0</span>
+            </div>
+            <ul id="chat-users" class="chat-users" aria-label="Utenti nel canale"></ul>
+        </aside>
+    </main>
+</div>
+<footer class="site-footer" data-site-footer>
+    <div class="site-footer__main" id="site-footer-info">
+        <div class="site-footer__inner">
+            <section class="site-footer__column" aria-label="Football Whispers">
+                <h2>Football Whispers</h2>
+                <p>Statistiche di giocatori e squadre, con pronostici.</p>
+            </section>
+            <section class="site-footer__column" aria-label="Social">
+                <h2>Social</h2>
+                <p class="site-footer__social"><span>Facebook</span><span>Instagram</span><span>Twitter</span></p>
+            </section>
+            <section class="site-footer__column" aria-label="Contatti">
+                <h2>Contatti</h2>
+                <address>
+                    <span>Via Roma 2, Torino, TO 10100, IT</span>
+                    <span class="site-footer__contact-links">
+                        <a href="mailto:info@footballwhispers.com">info@footballwhispers.com</a>
+                        <a href="tel:+393473085745">+39 347 3085745</a>
+                    </span>
+                </address>
+            </section>
+        </div>
+    </div>
+    <div class="site-footer__bottom">
+        <button class="site-footer__toggle" type="button" aria-label="Informazioni e contatti"
+                aria-controls="site-footer-info" aria-expanded="false">Info</button>
+        <small>© 2024 <strong>Football Whispers</strong><span class="site-footer__divider" aria-hidden="true">·</span>footballwhispers.com</small>
+    </div>
+</footer>
+</body>
+</html>

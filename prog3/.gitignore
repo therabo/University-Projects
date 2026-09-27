@@ -1,0 +1,10 @@
+.idea/
+*.iml
+**/target/
+.DS_Store
+.vscode/
+.classpath
+.project
+.settings/
+build/
+mail-data/

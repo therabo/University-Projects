@@ -1,0 +1,135 @@
+.site-footer {
+    position: relative;
+    z-index: 25;
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    color: var(--ui-color-text-on-panel);
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.site-footer, .site-footer * { box-sizing: border-box; }
+
+.site-footer__main {
+    display: flex;
+    align-items: center;
+    min-height: clamp(54px, 6.85vh, 95px);
+    padding: clamp(7px, .8vh, 12px) var(--ui-space-section-inline);
+    background: linear-gradient(rgba(47, 0, 54, .32), rgba(47, 0, 54, .32)), url('../images/footer.png') center / cover;
+}
+
+.site-footer__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, .55fr) minmax(0, 1.5fr);
+    align-items: start;
+    gap: clamp(20px, 3vw, 56px);
+    width: min(100%, 1280px);
+    margin: 0 auto;
+}
+
+.site-footer__column { min-width: 0; }
+.site-footer__column h2 {
+    margin: 0 0 5px;
+    color: var(--ui-color-card);
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: clamp(12px, .9vw, 15px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.site-footer__column p,
+.site-footer__column address {
+    margin: 0;
+    color: var(--ui-color-text-on-panel);
+    font-size: clamp(12px, .85vw, 14px);
+    font-style: normal;
+    line-height: 1.4;
+}
+
+.site-footer__social,
+.site-footer__contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px 12px;
+}
+
+.site-footer__contact-links { margin-top: 2px; }
+.site-footer__column address { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
+.site-footer__column address .site-footer__contact-links { margin-top: 0; }
+.site-footer a {
+    padding: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+.site-footer a:hover { color: var(--ui-color-card); }
+.site-footer a:focus-visible,
+.site-footer__toggle:focus-visible {
+    outline: 2px solid var(--ui-color-focus);
+    outline-offset: 3px;
+}
+
+.site-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: clamp(24px, 1.8vh, 30px);
+    padding: 4px var(--ui-space-section-inline);
+    background: var(--ui-color-panel);
+    text-align: center;
+}
+.site-footer__bottom small {
+    margin: 0;
+    color: var(--ui-color-text-on-panel);
+    font-size: clamp(11px, .8vw, 13px);
+    line-height: 1.25;
+}
+.site-footer__bottom strong { color: var(--ui-color-card); font-weight: 700; }
+.site-footer__bottom .site-footer__divider { margin: 0 6px; opacity: .7; }
+.site-footer__toggle { display: none; }
+
+@media (max-width: 900px) {
+    .site-footer--interactive .site-footer__main {
+        display: none;
+        position: absolute;
+        right: 0;
+        bottom: 100%;
+        left: 0;
+        min-height: 0;
+        max-height: min(70dvh, 320px);
+        overflow-y: auto;
+        border-radius: 18px 18px 0 0;
+        box-shadow: 0 -8px 24px rgba(36, 0, 42, .28);
+    }
+    .site-footer--interactive .site-footer__main.is-open { display: block; }
+    .site-footer__inner { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .site-footer__bottom { justify-content: space-between; gap: 12px; min-height: 40px; }
+    .site-footer--interactive .site-footer__toggle {
+        display: inline-flex;
+        align-items: center;
+        flex: 0 0 auto;
+        min-height: 30px;
+        padding: 3px 9px;
+        border: 1px solid var(--ui-color-card);
+        border-radius: 8px;
+        background: transparent;
+        color: var(--ui-color-card);
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    .site-footer__bottom small { margin-left: auto; text-align: right; }
+}
+
+@media (max-width: 600px) {
+    .site-footer__main { max-height: 65dvh; padding: 15px var(--ui-space-section-inline); }
+    .site-footer__inner { grid-template-columns: minmax(0, 1fr); gap: 13px; }
+    .site-footer__column h2 { font-size: 13px; }
+    .site-footer__column p, .site-footer__column address { font-size: 13px; }
+    .site-footer__bottom small { font-size: 11px; }
+}

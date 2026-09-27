@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Register page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/images/logo.png?v=2024">
+    <link href="stylesheets/design-tokens.css" rel="stylesheet">
+    <link href="stylesheets/auth.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Deca%3A400"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C500%2C700"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter%3A500"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Sans%3A400%2C700"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="javascripts/register.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/site-footer.css">
+    <script src="javascripts/site-footer.js" defer></script>
+</head>
+<body class="auth-page">
+<div class="container-fluid">
+    <header class="header">
+        <div class="title-container">
+            <h1 class="football-whispers">FOOTBALL</h1>
+            <img class="logo" src="images/logo.png" alt="Logo Football Whisper">
+            <h1 class="football-whispers">WHISPER</h1>
+        </div>
+    </header>
+    <main class="container-flex">
+        <div class="container-form">
+            <form class="form">
+                <div class="input-div">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="email" placeholder="Insert username"
+                           aria-label="Insert username"
+                           required>
+                </div>
+                <div class="input-div">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Insert email" aria-label="Insert email"
+                           required>
+                </div>
+                <div class="input-div">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" minlength="8" placeholder="Insert password"
+                           aria-label="Insert password" aria-describedby="password_description" required>
+                </div>
+                <button type="button" class="button" aria-label="Registrati">
+                    <a class="text-button" href="login.html">
+                        Registrati
+                    </a>
+                </button>
+            </form>
+        </div>
+        <aside class="container-info">
+            <div class="info">
+                <div class="element">
+                    <div class="circle-frame">
+                        <img src="images/register-step-1.png" alt="Istruzioni per l'autenticazione a due fattori">
+                    </div>
+                    <div class="text">Partecipazione a pronostici e notizie esclusive in anticipo!</div>
+                </div>
+                <div class="element">
+                    <div class="circle-frame">
+                        <img src="images/register-step-2.png" alt="Suggerimenti per aggiornare il profilo">
+                    </div>
+                    <div class="text">Aggiornamenti in tempo reale e notifiche!</div>
+                </div>
+                <div class="element">
+                    <div class="circle-frame">
+                        <img src="images/register-step-3.png" alt="Visualizza le ultime attività delle tue squadre preferite">
+                    </div>
+                    <div class="text">Accesso a sconti e offerte esclusive!</div>
+                </div>
+            </div>
+        </aside>
+    </main>
+</div>
+<footer class="site-footer" data-site-footer>
+    <div class="site-footer__main" id="site-footer-info">
+        <div class="site-footer__inner">
+            <section class="site-footer__column" aria-label="Football Whispers">
+                <h2>Football Whispers</h2>
+                <p>Statistiche di giocatori e squadre, con pronostici.</p>
+            </section>
+            <section class="site-footer__column" aria-label="Social">
+                <h2>Social</h2>
+                <p class="site-footer__social"><span>Facebook</span><span>Instagram</span><span>Twitter</span></p>
+            </section>
+            <section class="site-footer__column" aria-label="Contatti">
+                <h2>Contatti</h2>
+                <address>
+                    <span>Via Roma 2, Torino, TO 10100, IT</span>
+                    <span class="site-footer__contact-links">
+                        <a href="mailto:info@footballwhispers.com">info@footballwhispers.com</a>
+                        <a href="tel:+393473085745">+39 347 3085745</a>
+                    </span>
+                </address>
+            </section>
+        </div>
+    </div>
+    <div class="site-footer__bottom">
+        <button class="site-footer__toggle" type="button" aria-label="Informazioni e contatti"
+                aria-controls="site-footer-info" aria-expanded="false">Info</button>
+        <small>© 2024 <strong>Football Whispers</strong><span class="site-footer__divider" aria-hidden="true">·</span>footballwhispers.com</small>
+    </div>
+</footer>
+</body>
+</html>

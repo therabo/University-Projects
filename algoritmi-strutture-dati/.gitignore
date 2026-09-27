@@ -1,0 +1,7 @@
+.DS_Store
+**/.DS_Store
+**/cmake-build-*/
+**/bin/*
+**/.idea/workspace.xml
+**/out/
+data/unpacked/

@@ -1,0 +1,603 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "1.0.0",
+    "title": "Football Whispers Web API",
+    "description": "Il Main Server è un'applicazione Node.js basata su Express, progettata per facilitare la comunicazione tra un'applicazione front-end e due server: uno Spring Boot ed un altro Express. Questo server gestisce varie route per fornire servizi come il recupero di informazioni sulle squadre, competizioni e giocatori nel contesto del calcio. Utilizzando richieste HTTP con il modulo axios. La documentazione Swagger è in corso di sviluppo per guidare chiaramente l'uso delle API del server. Con una gestione degli errori attenta e un codice organizzato modularmente.",
+    "termsOfService": "http://api_url/terms/",
+    "contact": {
+      "name": "Project authors",
+      "url": "http://localhost:3000/api-docs"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Main Server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Get the login page",
+        "description": "Get the login page",
+        "responses": {
+          "200": {
+            "description": "Login page retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/loadHP": {
+      "get": {
+        "summary": "Load the homepage match feed",
+        "description": "Aggregates upcoming fixtures, recent results and catalogue-owned club crest URLs.",
+        "responses": {
+          "200": {
+            "description": "Homepage match feed retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeFeed"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/seasons": {
+      "get": {
+        "summary": "Get the list of seasons",
+        "description": "Get the list of seasons",
+        "responses": {
+          "200": {
+            "description": "List of seasons retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/country": {
+      "get": {
+        "summary": "Get the list of countries",
+        "description": "Get the list of countries",
+        "responses": {
+          "200": {
+            "description": "List of countries retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/list_competitions": {
+      "get": {
+        "summary": "Get the list of competitions",
+        "description": "Returns first-tier leagues with display name, code, catalog-owned image endpoint and the number of completed selections from the competitions page. Selection counts are never seeded.",
+        "responses": {
+          "200": {
+            "description": "List of competitions retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["Name", "Value", "SelectionCount"],
+                    "properties": {
+                      "Name": {"type": "string"},
+                      "Value": {"type": "string"},
+                      "LogoUrl": {"type": "string", "nullable": true, "example": "/competitions/IT1/logo"},
+                      "SelectionCount": {"type": "integer", "format": "int64", "minimum": 0}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/competitions/{id}/logo": {
+      "get": {
+        "summary": "Get a competition logo stored in the catalogue",
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}],
+        "responses": {
+          "200": {"description": "PNG logo", "content": {"image/png": {"schema": {"type": "string", "format": "binary"}}}},
+          "404": {"description": "Unknown competition or missing logo"}
+        }
+      }
+    },
+    "/competitions/selections": {
+      "post": {
+        "summary": "Record a completed league selection",
+        "description": "Call once before opening a league from the list, a filtered result, or a popular-league card. Stores an anonymous aggregate count in the catalogue.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["competition"],
+                "properties": {
+                  "competition": {"type": "string", "example": "serie-a"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {"description": "Selection recorded"},
+          "400": {"description": "Unknown or unsupported league code"},
+          "500": {"description": "Internal Server Error"}
+        }
+      }
+    },
+    "/get_role": {
+      "get": {
+        "summary": "Get the list of player roles",
+        "description": "Get the list of player roles",
+        "responses": {
+          "200": {
+            "description": "List of player roles retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/get_birth_years": {
+      "get": {
+        "summary": "Get the list of player birth years",
+        "description": "Get the list of player birth years",
+        "responses": {
+          "200": {
+            "description": "List of player birth years retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/list_teamsbycompetition": {
+      "post": {
+        "summary": "Get teams and crest URLs for a competition ID",
+        "description": "Returns club identity and crest metadata for the selected last recorded season, or the latest available year.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comp": {
+                    "type": "string"
+                  },
+                  "season": {
+                    "type": "integer",
+                    "description": "Optional last recorded club season; defaults to the latest year available in the catalog."
+                  }
+                },
+                "example": {
+                  "comp": "ES1"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of teams for the competition retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "clubId": { "type": "integer" },
+                      "name": { "type": "string" },
+                      "crestUrl": { "type": "string", "nullable": true }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/clubs/{id}/crest": {
+      "get": {
+        "summary": "Get a club crest from the local catalog database",
+        "parameters": [{ "in": "path", "name": "id", "required": true,
+          "schema": { "type": "integer", "format": "int64" } }],
+        "responses": {
+          "200": { "description": "Club crest", "content": { "image/png": {} } },
+          "404": { "description": "Club or crest not found" }
+        }
+      }
+    },
+    "/list_info_squad": {
+      "post": {
+        "summary": "Get information about a squad",
+        "description": "Get information about a squad",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "squad": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "squad": "Real Madrid Club de Fútbol"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Information about the squad retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/clubs/{id}/roster": {
+      "get": {
+        "summary": "Get players with recorded appearances for a club season",
+        "parameters": [
+          { "in": "path", "name": "id", "required": true,
+            "schema": { "type": "integer", "format": "int64" } },
+          { "in": "query", "name": "season", "required": false,
+            "description": "Start year of the season; defaults to the latest recorded season",
+            "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Season, available seasons, and appearance-derived players with catalog portraits" },
+          "400": { "description": "Invalid or unavailable season" },
+          "502": { "description": "Upstream service unavailable" }
+        }
+      }
+    },
+    "/clubs/{id}/stats": {
+      "get": {
+        "summary": "Get season statistics and up to 25 recent games for a club",
+        "description": "Proxies the Match API's season-scoped statistics; recentMatches are newest first.",
+        "parameters": [
+          { "in": "path", "name": "id", "required": true,
+            "schema": { "type": "integer", "format": "int64" } },
+          { "in": "query", "name": "season", "required": false,
+            "schema": { "type": "integer" } },
+          { "in": "query", "name": "scope", "required": false,
+            "schema": { "type": "string", "enum": ["league", "all"], "default": "league" } }
+        ],
+        "responses": {
+          "200": { "description": "Season summary, attack, defense, coverage and recentMatches" },
+          "400": { "description": "Invalid or unavailable club, season or scope" },
+          "502": { "description": "Upstream service unavailable" }
+        }
+      }
+    },
+    "/advanced_search": {
+      "post": {
+        "summary": "Perform an advanced search for players",
+        "description": "Perform an advanced search for players",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchDTO"
+              },
+              "example": {
+                "example_field": "{\n  season: '2023',\n  country: 'Argentina',\n  competition: 'LaLiga',\n  year_birth: null,\n  team: null,\n  role: 'Attacking Midfield'\n}\n"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Advanced search results retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/squad_stats": {
+      "post": {
+        "summary": "Get competition details and its stored logo URL",
+        "description": "Resolves a display code to one canonical competition ID and its same-origin logo URL.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SquadStatsRequest"
+              },
+              "example": {
+                "squad": "Real Madrid Club de Fútbol"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Stats of the squad retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/info_competition": {
+      "post": {
+        "summary": "Get catalog-owned league details and logo URL",
+        "description": "Resolves a display code to one league and reports metadata and available club years from the local catalog.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InfoCompetitionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Information about the competition retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "displayName": { "type": "string" },
+                    "countryName": { "type": "string" },
+                    "confederation": { "type": "string" },
+                    "competitionType": { "type": "string" },
+                    "tier": { "type": "string" },
+                    "dataSeason": { "type": "integer", "nullable": true },
+                    "clubCount": { "type": "integer" },
+                    "availableSeasons": {
+                      "type": "array",
+                      "description": "Distinct last recorded club seasons available for this competition, newest first.",
+                      "items": { "type": "integer" }
+                    },
+                    "logoUrl": { "type": "string", "nullable": true }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/comp_players": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompPlayersRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of players for the competition retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/info_player": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerInfoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Information about the player retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/players/{playerId}/profile": {
+      "get": {
+        "summary": "Profilo anagrafico e sportivo del giocatore dal catalogo",
+        "parameters": [
+          { "in": "path", "name": "playerId", "required": true, "schema": { "type": "integer", "format": "int64" } }
+        ],
+        "responses": {
+          "200": { "description": "Profilo del giocatore" },
+          "400": { "description": "ID non valido" },
+          "404": { "description": "Giocatore non trovato" }
+        }
+      }
+    },
+    "/api/players/{playerId}/stats": {
+      "get": {
+        "summary": "Statistiche del giocatore dalle presenze registrate",
+        "parameters": [
+          { "in": "path", "name": "playerId", "required": true, "schema": { "type": "integer", "format": "int64" } },
+          { "in": "query", "name": "season", "required": false, "description": "Anno iniziale; per default l'ultimo disponibile", "schema": { "type": "integer" } },
+          { "in": "query", "name": "scope", "required": false, "schema": { "type": "string", "enum": ["all", "league"], "default": "all" } }
+        ],
+        "responses": {
+          "200": { "description": "Annate disponibili, copertura, riepilogo e tabella stagionale" },
+          "400": { "description": "ID, annata o competizione non validi" },
+          "500": { "description": "Statistiche non disponibili" }
+        }
+      }
+    },
+    "/api/players/{playerId}/valuations": {
+      "get": {
+        "summary": "Rilevazioni storiche del valore di mercato in euro",
+        "parameters": [
+          { "in": "path", "name": "playerId", "required": true, "schema": { "type": "integer", "format": "int64" } }
+        ],
+        "responses": {
+          "200": { "description": "Rilevazioni ordinate, ultimo valore e picco registrato" },
+          "400": { "description": "ID non valido" },
+          "500": { "description": "Storico non disponibile" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HomeFeed": {
+        "type": "object",
+        "required": ["upcomingMatches", "recentResults"],
+        "properties": {
+          "upcomingMatches": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/UpcomingMatch" }
+          },
+          "recentResults": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/MatchResult" }
+          }
+        }
+      },
+      "UpcomingMatch": {
+        "type": "object",
+        "required": ["date", "time", "homeTeam", "awayTeam"],
+        "properties": {
+          "date": { "type": "string", "example": "13/01" },
+          "time": { "type": "string", "example": "16:00" },
+          "homeTeam": { "$ref": "#/components/schemas/MatchTeam" },
+          "awayTeam": { "$ref": "#/components/schemas/MatchTeam" }
+        }
+      },
+      "MatchResult": {
+        "type": "object",
+        "required": ["id", "stadium", "score", "homeTeam", "awayTeam"],
+        "properties": {
+          "id": { "type": "string" },
+          "stadium": { "type": "string" },
+          "score": { "type": "string", "example": "5:0" },
+          "homeTeam": { "$ref": "#/components/schemas/MatchTeam" },
+          "awayTeam": { "$ref": "#/components/schemas/MatchTeam" }
+        }
+      },
+      "MatchTeam": {
+        "type": "object",
+        "required": ["clubId", "name"],
+        "properties": {
+          "clubId": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
+          "crestUrl": { "type": "string", "format": "uri", "nullable": true }
+        }
+      },
+      "SquadStatsRequest": {
+        "type": "object",
+        "properties": {
+          "squad": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "squad": "Real Madrid Club de Fútbol"
+        }
+      },
+      "SearchDTO": {
+        "type": "object",
+        "properties": {
+          "example_field": {
+            "type": "string",
+            "description": "An example field for advanced search: {\n  season: '2023',\n  country: 'Argentina',\n  competition: 'LaLiga',\n  year_birth: null,\n  team: null,\n  role: 'Attacking Midfield'\n}\n"
+          }
+        }
+      },
+      "InfoCompetitionRequest": {
+        "type": "object",
+        "properties": {
+          "comp": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "comp": "laliga"
+        }
+      },
+      "CompPlayersRequest": {
+        "type": "object",
+        "properties": {
+          "comp": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "comp": "laliga"
+        }
+      },
+      "PlayerInfoRequest": {
+        "type": "object",
+        "properties": {
+          "playerName": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "playerName": "Lionel Messi"
+        }
+      }
+    }
+  }
+}
+
+
+

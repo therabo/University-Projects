@@ -1,0 +1,198 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "1.0.0",
+    "title": "Football Whispers Match API",
+    "description": "API for match history, appearances and team statistics.",
+    "termsOfService": "http://api_url/terms/",
+    "contact": {
+      "name": "Project authors",
+      "url": "http://localhost:3001/api-docs"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "description": "Match API"
+    }
+  ],
+  "paths": {
+    "/loadHP": {
+      "get": {
+        "summary": "Load the Home page with the recent games",
+        "description": "Load the Home page with the recent games",
+        "responses": {
+          "200": {
+            "description": "Recent games retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/players/{playerId}/stats": {
+      "get": {
+        "summary": "Statistiche stagionali del giocatore dalle presenze registrate",
+        "parameters": [
+          { "in": "path", "name": "playerId", "required": true, "schema": { "type": "integer", "format": "int64" } },
+          { "in": "query", "name": "season", "required": false, "schema": { "type": "integer" } },
+          { "in": "query", "name": "scope", "required": false, "schema": { "type": "string", "enum": ["all", "league"], "default": "all" } }
+        ],
+        "responses": {
+          "200": { "description": "Annate disponibili, riepilogo e copertura dell'archivio" },
+          "400": { "description": "ID, annata o ambito non validi" },
+          "500": { "description": "Statistiche non disponibili" }
+        }
+      }
+    },
+    "/clubs/{clubId}/roster": {
+      "get": {
+        "summary": "Get appearance-derived players and available seasons for a club",
+        "parameters": [
+          { "in": "path", "name": "clubId", "required": true,
+            "schema": { "type": "integer", "format": "int64" } },
+          { "in": "query", "name": "season", "required": false,
+            "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Selected season, available seasons and player IDs/names" },
+          "400": { "description": "Invalid or unavailable season" },
+          "500": { "description": "Roster unavailable" }
+        }
+      }
+    },
+    "/clubs/{clubId}/stats": {
+      "get": {
+        "summary": "Get season statistics and up to 25 recent games for a club",
+        "description": "Results are ordered newest first; summary and coverage use all recorded games in the selected season and scope.",
+        "parameters": [
+          { "in": "path", "name": "clubId", "required": true,
+            "schema": { "type": "integer", "format": "int64" } },
+          { "in": "query", "name": "season", "required": false,
+            "description": "Start year; defaults to the latest recorded season",
+            "schema": { "type": "integer" } },
+          { "in": "query", "name": "scope", "required": false,
+            "schema": { "type": "string", "enum": ["league", "all"], "default": "league" } }
+        ],
+        "responses": {
+          "200": { "description": "Season summary, attack, defense, coverage and recentMatches" },
+          "400": { "description": "Invalid or unavailable club, season or scope" },
+          "500": { "description": "Statistics unavailable" }
+        }
+      }
+    },
+    "/squad_stats": {
+      "post": {
+        "summary": "Get stats of a squad",
+        "description": "Get stats of a squad",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "squad": {
+                    "type": "string",
+                    "description": "The name of the squad for the stats"
+                  }
+                },
+                "example": {
+                  "squad": "Real Madrid Club de Fútbol"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Stats of the squad retrieved successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ClubGames": {
+        "type": "object",
+        "properties": {
+          "club_id": { "type": "number" },
+          "game_id": { "type": "number" },
+          "hosting": { "type": "string" },
+          "opponent_goals": { "type": "number" },
+          "is_win": { "type": "number" },
+          "opponent_id": { "type": "number" },
+          "opponent_manager_name": { "type": "string" },
+          "opponent_position": { "type": "number" },
+          "own_goals": { "type": "number" },
+          "own_manager_name": { "type": "string" },
+          "own_position": { "type": "number" }
+        }
+      },
+      "GameEvents": {
+        "type": "object",
+        "properties": {
+          "club_id": { "type": "number" },
+          "date": { "type": "string", "format": "date-time" },
+          "description": { "type": "string" },
+          "game_id": { "type": "number" },
+          "minute": { "type": "number" },
+          "player_assist_id": { "type": "number" },
+          "player_id": { "type": "number" },
+          "player_in_id": { "type": "number" },
+          "type": { "type": "string" },
+          "game_event_id": { "type": "string" }
+        }
+      },
+      "GameLineups": {
+        "type": "object",
+        "properties": {
+          "club_id": { "type": "number" },
+          "game_id": { "type": "number" },
+          "game_lineups_id": { "type": "number" },
+          "number": { "type": "number" },
+          "player_id": { "type": "number" },
+          "player_name": { "type": "string" },
+          "position": { "type": "string" },
+          "team_captain": { "type": "number" },
+          "type": { "type": "string" }
+        }
+      },
+      "Games": {
+        "type": "object",
+        "properties": {
+          "attendance": { "type": "number" },
+          "competition_id": { "type": "string" },
+          "competition_type": { "type": "string" },
+          "game_id": { "type": "number" },
+          "home_club_goals": { "type": "number" },
+          "referee": { "type": "string" },
+          "url": { "type": "string" },
+          "aggregate": { "type": "string" },
+          "away_club_goals": { "type": "number" },
+          "date": { "type": "string", "format": "date-time" },
+          "home_club_id": { "type": "number" },
+          "round": { "type": "string" },
+          "away_club_id": { "type": "number" },
+          "home_club_manager_name": { "type": "string" },
+          "season": { "type": "number" },
+          "away_club_manager_name": { "type": "string" },
+          "home_club_name": { "type": "string" },
+          "stadium": { "type": "string" },
+          "away_club_name": { "type": "string" },
+          "home_club_position": { "type": "number" },
+          "away_club_position": { "type": "number" }
+        }
+      }
+    }
+  }
+}

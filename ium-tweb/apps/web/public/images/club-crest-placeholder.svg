@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Logo squadra non disponibile</title>
+  <path fill="#590061" d="M32 3 54 11v18c0 15-8.7 25.4-22 32C18.7 54.4 10 44 10 29V11L32 3Z"/>
+  <path fill="#e3c977" d="M32 9.2 48 15v14c0 10.8-5.6 18.9-16 24.8C21.6 47.9 16 39.8 16 29V15l16-5.8Z"/>
+  <text x="32" y="36" fill="#590061" font-family="Arial, sans-serif" font-size="15" font-weight="700" text-anchor="middle">FW</text>
+</svg>

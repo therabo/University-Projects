@@ -1,0 +1,31 @@
+:root {
+    --ui-color-page-start: #690072;
+    --ui-color-page-end: rgba(152, 0, 19, 0.75);
+    --ui-color-panel: #590061;
+    --ui-color-panel-deep: #47004e;
+    --ui-color-panel-raised: #700078;
+    --ui-color-row-stripe: rgba(255, 255, 255, 0.035);
+    --ui-color-card: #e3c977;
+    --ui-color-card-strong: #ddbb4e;
+    --ui-color-text-on-panel: #ffffff;
+    --ui-color-text-on-card: #1d071f;
+    --ui-color-focus: #fff2a8;
+
+    --ui-space-section-inline: clamp(1rem, 3vw, 3rem);
+    --ui-space-section-block: clamp(3rem, 6vw, 6rem);
+    --ui-space-panel-padding: clamp(2rem, 3.5vw, 4rem);
+    --ui-space-card-gap: clamp(1.5rem, 2.5vw, 2.5rem);
+    --ui-radius-panel: 1.875rem;
+    --ui-radius-card: 1.875rem;
+}
+
+@media (max-width: 600px) {
+    :root {
+        --ui-space-section-inline: 0.75rem;
+        --ui-space-section-block: 3rem;
+        --ui-space-panel-padding: 1rem;
+        --ui-space-card-gap: 0.75rem;
+        --ui-radius-panel: 1.5rem;
+        --ui-radius-card: 1.25rem;
+    }
+}

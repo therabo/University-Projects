@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane minHeight="480.0" minWidth="570.0" prefHeight="560.0" prefWidth="700.0" styleClass="app-root" stylesheets="@mail.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.project.mail.client.controller.EmailController">
+    <center>
+        <VBox spacing="20.0" BorderPane.alignment="CENTER">
+            <padding><Insets top="32.0" right="34.0" bottom="32.0" left="34.0" /></padding>
+            <children>
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="NUOVO MESSAGGIO" styleClass="eyebrow" />
+                        <Label text="Scrivi un’email" styleClass="page-title" />
+                    </children>
+                </VBox>
+                <VBox spacing="17.0" styleClass="card">
+                    <padding><Insets top="25.0" right="26.0" bottom="25.0" left="26.0" /></padding>
+                    <children>
+                        <VBox spacing="8.0">
+                            <children>
+                                <Label text="Destinatari" styleClass="field-label" />
+                                <TextField fx:id="field_email" prefHeight="42.0" promptText="nome@dominio.it" />
+                                <Label text="Separa più indirizzi con una virgola o un punto e virgola." styleClass="body-copy" />
+                            </children>
+                        </VBox>
+                        <VBox spacing="8.0">
+                            <children>
+                                <Label text="Oggetto" styleClass="field-label" />
+                                <TextField fx:id="field_subject" prefHeight="42.0" promptText="Oggetto del messaggio" />
+                            </children>
+                        </VBox>
+                        <VBox spacing="8.0">
+                            <children>
+                                <Label text="Messaggio" styleClass="field-label" />
+                                <TextArea fx:id="field_text" prefHeight="120.0" promptText="Scrivi il tuo messaggio" wrapText="true" />
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+                <Button fx:id="btn_send" alignment="CENTER" prefHeight="44.0" prefWidth="150.0" text="Invia email" styleClass="primary-button" />
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/images/logo.png?v=2024">
+    <title>Profilo giocatore · Football Whispers</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Deca%3A400%2C600%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Mega%3A700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C600%2C700">
+    <link rel="stylesheet" href="./stylesheets/design-tokens.css">
+    <link rel="stylesheet" href="./stylesheets/site-header.css">
+    <link rel="stylesheet" href="./stylesheets/player.css">
+    <script src="./javascripts/site-header.js" defer></script>
+    <script src="./javascripts/player.js" defer></script>
+    <link rel="stylesheet" href="stylesheets/site-footer.css">
+    <script src="javascripts/site-footer.js" defer></script>
+</head>
+<body class="player-page">
+<header class="header site-header" data-site-header>
+    <div class="title-container site-header__bar">
+        <div class="container-logo site-header__brand">
+            <img class="logo" src="./images/logo-homepage.png" alt="Football Whispers">
+        </div>
+        <div class="link-container site-header__navigation">
+            <nav aria-label="Navigazione principale">
+                <ul class="link-header">
+                    <li><a class="site-nav__link" href="index.html">Home</a></li>
+                    <li><a class="site-nav__link" href="channel.html">Chat Live</a></li>
+                    <li><a class="site-nav__link" href="competitions.html">Campionati</a></li>
+                    <li><a class="site-nav__link" href="teams.html">Squadre</a></li>
+                    <li><a class="site-nav__link" href="players.html" aria-current="page">Giocatori</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-login-container site-header__actions">
+            <button id="mostra-barra" class="search-button" type="button" aria-label="Apri la ricerca"
+                    aria-controls="barra-ricerca" aria-expanded="false" data-header-toggle="search">
+                <img class="search-img" src="./images/searchbar.png" alt="" aria-hidden="true">
+            </button>
+            <button id="mostra-opzioni" class="login-button" type="button" aria-label="Apri il menu profilo"
+                    aria-controls="opzioni-login" aria-expanded="false" aria-haspopup="menu" data-header-toggle="profile">
+                <img class="login-img" src="./images/login-img.png" alt="" aria-hidden="true">
+            </button>
+        </div>
+    </div>
+    <div class="wrap-barra-ricerca site-header__panels">
+        <div id="barra-ricerca" class="barra-ricerca-container site-header__panel site-header__panel--search"
+             role="search" aria-label="Ricerca nel sito" aria-hidden="true" data-header-panel="search">
+            <input id="input-ricerca" type="search" placeholder="Cerca nel sito..."
+                   aria-label="Cerca giocatori, squadre o campionati" autocomplete="off">
+        </div>
+        <div class="opzioni-login-container">
+            <div id="opzioni-login" class="wrap-opzioni-login site-header__panel site-header__panel--profile"
+                 role="menu" aria-label="Menu profilo" aria-hidden="true" data-header-panel="profile">
+                <button type="button" role="menuitem">Profilo</button>
+                <button type="button" role="menuitem">Sicurezza</button>
+                <button type="button" role="menuitem" data-site-logout>Log out</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="player-layout">
+    <div class="player-heading">
+        <p class="player-eyebrow">Scheda giocatore</p>
+        <h1 id="player-name">Caricamento…</h1>
+        <p id="player-subtitle">Profilo e rendimento dalle partite registrate</p>
+    </div>
+
+    <div id="player-error" class="player-error" role="alert" hidden></div>
+
+    <div class="player-grid">
+        <aside class="player-profile panel" aria-labelledby="profile-heading">
+            <h2 id="profile-heading">Profilo</h2>
+            <div class="player-portrait">
+                <img id="player-image" src="./images/player-portrait-placeholder.svg" alt="" decoding="async">
+            </div>
+            <dl class="player-facts">
+                <div><dt>Squadra nell'archivio</dt><dd id="player-team">—</dd></div>
+                <div><dt>Ruolo</dt><dd id="player-position">—</dd></div>
+                <div><dt>Nazionalità</dt><dd id="player-nationality">—</dd></div>
+                <div><dt>Data di nascita</dt><dd id="player-birth">—</dd></div>
+                <div><dt>Età</dt><dd id="player-age">—</dd></div>
+                <div><dt>Altezza</dt><dd id="player-height">—</dd></div>
+                <div><dt>Piede</dt><dd id="player-foot">—</dd></div>
+            </dl>
+        </aside>
+
+        <section class="player-performance panel" aria-labelledby="performance-heading">
+            <div class="panel-heading">
+                <div>
+                    <p class="panel-kicker">Dati delle partite</p>
+                    <h2 id="performance-heading">Statistiche stagionali</h2>
+                </div>
+                <div class="player-filters">
+                    <label for="player-season">Annata
+                        <select id="player-season" disabled><option value="">Caricamento…</option></select>
+                    </label>
+                    <label for="player-scope">Competizione
+                        <select id="player-scope" disabled>
+                            <option value="all">Tutte</option>
+                            <option value="league">Campionato</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <p id="stats-status" class="stats-status" role="status">Caricamento statistiche…</p>
+            <div class="player-metrics" aria-label="Riepilogo stagionale">
+                <div class="metric"><span>Presenze</span><strong id="stat-appearances">—</strong></div>
+                <div class="metric"><span>Minuti</span><strong id="stat-minutes">—</strong></div>
+                <div class="metric"><span>Gol</span><strong id="stat-goals">—</strong></div>
+                <div class="metric"><span>Assist</span><strong id="stat-assists">—</strong></div>
+                <div class="metric"><span>Gol + assist</span><strong id="stat-contributions">—</strong></div>
+                <div class="metric"><span>Contributi / 90′</span><strong id="stat-per90">—</strong></div>
+            </div>
+            <div class="player-secondary-stats">
+                <span>Gol / 90′ <strong id="stat-goals-per90">—</strong></span>
+                <span>Assist / 90′ <strong id="stat-assists-per90">—</strong></span>
+                <span>Gialli <strong id="stat-yellow">—</strong></span>
+                <span>Rossi <strong id="stat-red">—</strong></span>
+            </div>
+            <h3>Stagioni nell'archivio</h3>
+            <div class="season-table-scroll">
+                <table class="season-table">
+                    <thead><tr><th scope="col">Annata</th><th scope="col">Presenze</th><th scope="col">Minuti</th><th scope="col">Gol</th><th scope="col">Assist</th><th scope="col">G+A / 90′</th></tr></thead>
+                    <tbody id="season-rows"><tr><td colspan="6">Caricamento…</td></tr></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <section class="player-valuations panel" aria-labelledby="valuation-heading">
+        <div class="panel-heading">
+            <div>
+                <p class="panel-kicker">Storico delle rilevazioni</p>
+                <h2 id="valuation-heading">Valore di mercato</h2>
+            </div>
+            <div class="valuation-summary">
+                <div><span>Ultimo rilevato</span><strong id="valuation-latest">—</strong><small id="valuation-latest-date"></small></div>
+                <div><span>Picco registrato</span><strong id="valuation-peak">—</strong><small id="valuation-peak-date"></small></div>
+            </div>
+        </div>
+        <div id="valuation-chart" class="valuation-chart" role="img" aria-label="Andamento del valore di mercato"></div>
+        <p id="valuation-status" class="data-note" role="status">Caricamento rilevazioni…</p>
+    </section>
+</main>
+
+<footer class="site-footer" data-site-footer>
+    <div class="site-footer__main" id="site-footer-info">
+        <div class="site-footer__inner">
+            <section class="site-footer__column" aria-label="Football Whispers">
+                <h2>Football Whispers</h2>
+                <p>Statistiche di giocatori e squadre, con pronostici.</p>
+            </section>
+            <section class="site-footer__column" aria-label="Social">
+                <h2>Social</h2>
+                <p class="site-footer__social"><span>Facebook</span><span>Instagram</span><span>Twitter</span></p>
+            </section>
+            <section class="site-footer__column" aria-label="Contatti">
+                <h2>Contatti</h2>
+                <address>
+                    <span>Via Roma 2, Torino, TO 10100, IT</span>
+                    <span class="site-footer__contact-links">
+                        <a href="mailto:info@footballwhispers.com">info@footballwhispers.com</a>
+                        <a href="tel:+393473085745">+39 347 3085745</a>
+                    </span>
+                </address>
+            </section>
+        </div>
+    </div>
+    <div class="site-footer__bottom">
+        <button class="site-footer__toggle" type="button" aria-label="Informazioni e contatti"
+                aria-controls="site-footer-info" aria-expanded="false">Info</button>
+        <small>© 2024 <strong>Football Whispers</strong><span class="site-footer__divider" aria-hidden="true">·</span>footballwhispers.com</small>
+    </div>
+</footer>

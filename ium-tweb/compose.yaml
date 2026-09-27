@@ -1,0 +1,126 @@
+name: ium-tweb
+
+services:
+  web:
+    build: ./apps/web
+    environment:
+      PORT: 3000
+      MATCH_API_URL: http://match-api:3001
+      CATALOG_API_URL: http://catalog-api:8081
+      ANALYTICS_API_URL: http://analytics-api:5055
+      UPSTREAM_TIMEOUT_MS: ${UPSTREAM_TIMEOUT_MS:-10000}
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    depends_on:
+      match-api:
+        condition: service_healthy
+      catalog-api:
+        condition: service_healthy
+      analytics-api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  match-api:
+    build: ./apps/match-api
+    environment:
+      PORT: 3001
+      MONGODB_URI: mongodb://mongo-db:27017/${MONGO_DATABASE:-DynamicDatabase}
+    ports:
+      - "${MATCH_API_PORT:-3001}:3001"
+    depends_on:
+      mongo-seed:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  catalog-api:
+    build: ./apps/catalog-api
+    environment:
+      PORT: 8081
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/${POSTGRES_DB:-static_database}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      APP_SEED_DATA: ${APP_SEED_DATA:-true}
+    ports:
+      - "${CATALOG_API_PORT:-8081}:8081"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:8081/actuator/health/readiness"]
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 90s
+    restart: unless-stopped
+
+  analytics-api:
+    build: ./apps/analytics-api
+    environment:
+      HOST: 0.0.0.0
+      PORT: 5055
+      ANALYTICS_DATA_DIR: /app/data
+    ports:
+      - "${ANALYTICS_API_PORT:-5055}:5055"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5055/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  mongo-db:
+    image: mongo:8.0
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-DynamicDatabase}
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  mongo-seed:
+    image: mongo:8.0
+    environment:
+      MONGO_DATABASE: ${MONGO_DATABASE:-DynamicDatabase}
+      MONGO_HOST: mongo-db
+    volumes:
+      - ./data/seed/mongodb:/seed:ro
+      - ./scripts/mongo-init.sh:/scripts/mongo-init.sh:ro
+    entrypoint: ["/bin/sh", "/scripts/mongo-init.sh"]
+    depends_on:
+      mongo-db:
+        condition: service_healthy
+    restart: "no"
+
+  postgres-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-static_database}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-static_database}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
+  postgres-data:

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/images/logo.png?v=2024">
+    <title>Giocatori</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Deca%3A400%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Mega%3A700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C700">
+    <link rel="stylesheet" href="stylesheets/design-tokens.css">
+    <link rel="stylesheet" href="stylesheets/players.css">
+    <link rel="stylesheet" href="stylesheets/site-header.css">
+    <link rel="stylesheet" href="stylesheets/site-footer.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+    <script src="javascripts/site-header.js" defer></script>
+    <script src="javascripts/players.js" defer></script>
+    <script src="javascripts/site-footer.js" defer></script>
+</head>
+<body class="players-page">
+<div class="container-fluid">
+    <header class="header site-header" data-site-header>
+        <div class="title-container site-header__bar">
+            <div class="container-logo site-header__brand">
+                <img class="logo" src="images/logo-homepage.png" alt="Logo Football Whisper">
+            </div>
+            <div class="link-container site-header__navigation">
+                <nav aria-label="Navigazione principale">
+                    <ul class="link-header">
+                        <li><a class="site-nav__link" href="index.html">Home</a></li>
+                        <li><a class="site-nav__link" href="channel.html">Chat Live</a></li>
+                        <li><a class="site-nav__link" href="competitions.html">Campionati</a></li>
+                        <li><a class="site-nav__link" href="teams.html">Squadre</a></li>
+                        <li><a class="site-nav__link" href="players.html" aria-current="page">Giocatori</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="search-login-container site-header__actions">
+                <button id="mostra-barra" class="search-button" type="button" aria-label="Apri la ricerca"
+                        aria-controls="barra-ricerca" aria-expanded="false" data-header-toggle="search">
+                    <img class="search-img" src="images/searchbar.png" alt="" aria-hidden="true">
+                </button>
+                <button id="mostra-opzioni" class="login-button" type="button" aria-label="Apri il menu profilo"
+                        aria-controls="opzioni-login" aria-expanded="false" aria-haspopup="menu"
+                        data-header-toggle="profile">
+                    <img class="login-img" src="images/login-img.png" alt="" aria-hidden="true">
+                </button>
+            </div>
+        </div>
+        <div class="wrap-barra-ricerca site-header__panels">
+            <div id="barra-ricerca" class="barra-ricerca-container site-header__panel site-header__panel--search"
+                 role="search" aria-label="Ricerca nel sito" aria-hidden="true" data-header-panel="search">
+                <input id="input-ricerca" type="search" placeholder="Cerca nel sito..."
+                       aria-label="Cerca giocatori, squadre o campionati" autocomplete="off">
+            </div>
+            <div class="opzioni-login-container">
+                <div id="opzioni-login" class="wrap-opzioni-login site-header__panel site-header__panel--profile"
+                     role="menu" aria-label="Menu profilo" aria-hidden="true" data-header-panel="profile">
+                    <button type="button" role="menuitem">Profilo</button>
+                    <button type="button" role="menuitem">Sicurezza</button>
+                    <button type="button" role="menuitem" data-site-logout>Log out</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="players-layout">
+        <section class="players-search-panel" aria-labelledby="advanced-search-title">
+            <div class="players-search-panel__heading">
+                <h1 id="advanced-search-title">Ricerca avanzata</h1>
+                <div class="players-search-panel__actions">
+                    <button id="btn-reset" class="players-action players-action--reset" type="reset" form="advanced-search-form">Azzera filtri</button>
+                    <button id="advanced_searchbtn" class="players-action players-action--submit" type="submit" form="advanced-search-form">Cerca</button>
+                </div>
+            </div>
+            <form id="advanced-search-form" class="players-filters" aria-label="Filtri di ricerca dei giocatori">
+                <label class="players-filter" for="seasons_menu"><span>Stagione</span><select id="seasons_menu" name="season"><option value="">Tutte</option></select></label>
+                <label class="players-filter" for="country_menu"><span>Paese</span><select id="country_menu" name="country"><option value="">Tutti</option></select></label>
+                <label class="players-filter" for="championships_menu"><span>Campionato</span><select id="championships_menu" name="competition"><option value="">Tutti</option></select></label>
+                <label class="players-filter" for="years_birth_menu"><span>Anno di nascita</span><select id="years_birth_menu" name="year_birth"><option value="">Tutti</option></select></label>
+                <label class="players-filter" for="club_menu"><span>Squadra</span><select id="club_menu" name="team"><option value="">Tutte</option></select></label>
+                <label class="players-filter" for="role_menu"><span>Ruolo</span><select id="role_menu" name="role"><option value="">Tutti</option></select></label>
+            </form>
+            <p id="search-feedback" class="players-search-panel__feedback" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="players-results-panel" aria-labelledby="results-title">
+            <div class="players-results-panel__heading">
+                <h2 id="results-title">Risultati</h2>
+                <span id="results-count" class="players-results-panel__count" aria-live="polite" hidden></span>
+            </div>
+            <div class="players-results-scroll" role="region" tabindex="0" aria-label="Risultati della ricerca scorrevoli">
+                <table class="players-results-table">
+                    <thead><tr><th scope="col">#</th><th scope="col">Nome</th><th scope="col">Origine</th><th scope="col">Nascita</th><th scope="col">Club</th><th scope="col">Ruolo</th></tr></thead>
+                    <tbody id="players-results-body"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+<footer class="site-footer" data-site-footer>
+    <div class="site-footer__main" id="site-footer-info">
+        <div class="site-footer__inner">
+            <section class="site-footer__column" aria-label="Football Whispers">
+                <h2>Football Whispers</h2>
+                <p>Statistiche di giocatori e squadre, con pronostici.</p>
+            </section>
+            <section class="site-footer__column" aria-label="Social">
+                <h2>Social</h2>
+                <p class="site-footer__social"><span>Facebook</span><span>Instagram</span><span>Twitter</span></p>
+            </section>
+            <section class="site-footer__column" aria-label="Contatti">
+                <h2>Contatti</h2>
+                <address>
+                    <span>Via Roma 2, Torino, TO 10100, IT</span>
+                    <span class="site-footer__contact-links">
+                        <a href="mailto:info@footballwhispers.com">info@footballwhispers.com</a>
+                        <a href="tel:+393473085745">+39 347 3085745</a>
+                    </span>
+                </address>
+            </section>
+        </div>
+    </div>
+    <div class="site-footer__bottom">
+        <button class="site-footer__toggle" type="button" aria-label="Informazioni e contatti"
+                aria-controls="site-footer-info" aria-expanded="false">Info</button>
+        <small>© 2024 <strong>Football Whispers</strong><span class="site-footer__divider" aria-hidden="true">·</span>footballwhispers.com</small>
+    </div>
+</footer>
+</body>
+</html>

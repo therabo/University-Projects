@@ -1,0 +1,5 @@
+.gradle
+build
+src/test
+.idea
+.DS_Store

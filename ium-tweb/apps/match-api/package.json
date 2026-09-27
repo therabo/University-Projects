@@ -1,0 +1,22 @@
+{
+  "name": "football-whispers-match-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "check": "node --check app.js && node --check routes/index.js && node --check controllers/club-roster-controller.js && node --check controllers/club-stats-controller.js && node --check controllers/player-stats-controller.js && node --check database/connection.js && node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "debug": "^4.4.3",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "http-errors": "^2.0.1",
+    "mongoose": "^9.10.1",
+    "morgan": "^1.12.1",
+    "swagger-ui-express": "^5.0.1"
+  }
+}

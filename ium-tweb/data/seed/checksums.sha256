@@ -1,0 +1,5 @@
+2d0ea9e2b7c8980020ef4d395d073ccdfc6416d8a620f3edb1749874d092ad70  data/seed/mongodb/appearances.csv.gz
+9eaf59bb7676f9daf9a36fe50cd4da542a1be3daebad62f8b8d3eb6fd44c3a25  data/seed/mongodb/club_games.csv.gz
+4d67defd38ee948a3e2b8a0ae22354fed3a9f875b837e172fc0d04142a21f973  data/seed/mongodb/game_events.csv.gz
+f1682eadc639584ca873b265d377586869c6f201d9f7e3de5d5cb396baedfc11  data/seed/mongodb/game_lineups.csv.gz
+d1c99629d60353a2229996a8b2070f28332589f3c3a28df5b7809b4e8501ffed  data/seed/mongodb/games.csv.gz

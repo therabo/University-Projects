@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane prefHeight="620.0" prefWidth="900.0" styleClass="app-root" stylesheets="@mail.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.project.mail.client.controller.LoginController">
+    <children>
+        <VBox alignment="CENTER_LEFT" maxHeight="480.0" maxWidth="440.0" spacing="24.0" styleClass="login-card">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                    <children>
+                        <Label text="M" styleClass="brand-mark" />
+                        <VBox alignment="CENTER_LEFT" spacing="1.0">
+                            <children>
+                                <Label text="MAIL DESK" styleClass="section-title" />
+                                <Label text="Programmazione III" styleClass="body-copy" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+                <VBox spacing="8.0">
+                    <children>
+                        <Label text="LA TUA POSTA" styleClass="eyebrow" />
+                        <Label text="Benvenuto" styleClass="page-title" />
+                        <Label text="Inserisci il tuo indirizzo email per aprire la casella di posta." wrapText="true" styleClass="body-copy" />
+                    </children>
+                </VBox>
+                <VBox spacing="9.0">
+                    <children>
+                        <Label text="Indirizzo email" styleClass="field-label" />
+                        <TextField fx:id="email_field" prefHeight="44.0" promptText="nome@dominio.it" />
+                        <Label fx:id="lbl_error" minHeight="18.0" wrapText="true" styleClass="error-message" />
+                    </children>
+                </VBox>
+                <Button fx:id="btn_login" maxWidth="Infinity" prefHeight="46.0" text="Apri la posta" styleClass="primary-button" />
+            </children>
+        </VBox>
+    </children>
+</StackPane>

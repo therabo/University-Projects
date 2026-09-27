@@ -1,0 +1,694 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>HomePage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/images/logo.png?v=2024">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish%3A400%2C700"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Deca%3A400%2C700"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend%3A400%2C700"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Exa%3A700"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter%3A400%2C700"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C700"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend+Mega%3A700"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Sans%3A400"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="javascripts/site-header.js" defer></script>
+    <script src="javascripts/home.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="stylesheets/design-tokens.css" rel="stylesheet">
+    <link href="stylesheets/home.css" rel="stylesheet">
+    <link href="stylesheets/site-header.css" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/site-footer.css">
+    <script src="javascripts/site-footer.js" defer></script>
+</head>
+<body>
+<div class="container-fluid">
+    <header class="header site-header" data-site-header>
+        <div class="title-container site-header__bar">
+            <div class="container-logo site-header__brand">
+                <img class="logo" src="./images/logo-homepage.png" alt="Logo Football Whisper">
+            </div>
+            <div class="link-container site-header__navigation">
+                <nav aria-label="Navigazione principale">
+                    <ul class="link-header">
+                        <li><a class="site-nav__link" href="./index.html" aria-current="page">Home</a></li>
+                        <li><a class="site-nav__link" href="./channel.html">Chat Live</a></li>
+                        <li><a class="site-nav__link" href="./competitions.html">Campionati</a></li>
+                        <li><a class="site-nav__link" href="./teams.html">Squadre</a></li>
+                        <li><a class="site-nav__link" href="players.html">Giocatori</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="search-login-container site-header__actions">
+                <button id="mostra-barra" class="search-button" type="button" aria-label="Apri la ricerca"
+                        aria-controls="barra-ricerca" aria-expanded="false" data-header-toggle="search">
+                    <img class="search-img" src="./images/searchbar.png" alt="" aria-hidden="true">
+                </button>
+                <button id="mostra-opzioni" class="login-button" type="button" aria-label="Apri il menu profilo"
+                        aria-controls="opzioni-login" aria-expanded="false" aria-haspopup="menu"
+                        data-header-toggle="profile">
+                    <img class="login-img" src="./images/login-img.png" alt="" aria-hidden="true">
+                </button>
+            </div>
+        </div>
+        <div class="wrap-barra-ricerca site-header__panels">
+            <div id="barra-ricerca" class="barra-ricerca-container site-header__panel site-header__panel--search"
+                 role="search" aria-label="Ricerca nel sito" aria-hidden="true" data-header-panel="search">
+                <input id="input-ricerca" type="search" placeholder="Cerca nel sito..."
+                       aria-label="Cerca giocatori, squadre o campionati" autocomplete="off">
+            </div>
+            <div class="opzioni-login-container">
+                <div id="opzioni-login" class="wrap-opzioni-login site-header__panel site-header__panel--profile"
+                     role="menu" aria-label="Menu profilo" aria-hidden="true" data-header-panel="profile">
+                    <button type="button" role="menuitem">Profilo</button>
+                    <button type="button" role="menuitem">Sicurezza</button>
+                    <button type="button" role="menuitem" data-site-logout>Log out</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="hero-carousel" data-hero-carousel aria-label="Momenti memorabili del calcio">
+        <div class="hero-carousel__viewport">
+            <div class="hero-carousel__deck">
+                <figure class="hero-carousel__slide is-active" data-carousel-slide aria-hidden="false">
+                    <img src="/images/getty-images-1016702318.webp"
+                         alt="Diego Maradona in campo con la maglia dell'Argentina">
+                </figure>
+                <figure class="hero-carousel__slide is-next" data-carousel-slide aria-hidden="true">
+                    <img src="/images/getty-images-1243754441-1200x675.webp"
+                         alt="Kylian Mbappé durante una partita del Paris Saint-Germain">
+                </figure>
+                <figure class="hero-carousel__slide is-next-far" data-carousel-slide aria-hidden="true">
+                    <img src="/images/getty-images-941534222.jpg"
+                         alt="Cristiano Ronaldo segna in rovesciata">
+                </figure>
+                <figure class="hero-carousel__slide" data-carousel-slide aria-hidden="true">
+                    <img src="/images/carousel-penalty-kick.webp" loading="lazy"
+                         alt="Un calciatore tira un rigore sotto le luci dello stadio">
+                </figure>
+                <figure class="hero-carousel__slide" data-carousel-slide aria-hidden="true">
+                    <img src="/images/carousel-goalkeeper-save.webp" loading="lazy"
+                         alt="Un portiere compie una parata in tuffo durante una partita sotto la pioggia">
+                </figure>
+                <figure class="hero-carousel__slide" data-carousel-slide aria-hidden="true">
+                    <img src="/images/carousel-womens-team-celebration.webp" loading="lazy"
+                         alt="Una squadra di calcio femminile festeggia un gol vicino alla bandierina">
+                </figure>
+                <figure class="hero-carousel__slide is-prev-far" data-carousel-slide aria-hidden="true">
+                    <img src="/images/carousel-street-football.webp" loading="lazy"
+                         alt="Due calciatori si sfidano su un campo urbano al tramonto">
+                </figure>
+                <figure class="hero-carousel__slide is-prev" data-carousel-slide aria-hidden="true">
+                    <img src="/images/carousel-youth-training.webp" loading="lazy"
+                         alt="Giovani calciatori si allenano con il pallone al sorgere del sole">
+                </figure>
+            </div>
+        </div>
+        <div class="hero-carousel__controls">
+            <button class="hero-carousel__arrow" type="button" data-carousel-prev
+                    aria-label="Mostra l'immagine precedente">
+                <span aria-hidden="true">&#8592;</span>
+            </button>
+            <div class="hero-carousel__dots" role="group" aria-label="Seleziona un'immagine">
+                <button class="hero-carousel__dot is-active" type="button" data-carousel-dot
+                        aria-label="Mostra la prima immagine" aria-current="true"></button>
+                <button class="hero-carousel__dot" type="button" data-carousel-dot
+                        aria-label="Mostra la seconda immagine"></button>
+                <button class="hero-carousel__dot" type="button" data-carousel-dot
+                        aria-label="Mostra la terza immagine"></button>
+                <button class="hero-carousel__dot" type="button" data-carousel-dot
+                        aria-label="Mostra la quarta immagine"></button>
+                <button class="hero-carousel__dot" type="button" data-carousel-dot
+                        aria-label="Mostra la quinta immagine"></button>
+                <button class="hero-carousel__dot" type="button" data-carousel-dot
+                        aria-label="Mostra la sesta immagine"></button>
+                <button class="hero-carousel__dot" type="button" data-carousel-dot
+                        aria-label="Mostra la settima immagine"></button>
+                <button class="hero-carousel__dot" type="button" data-carousel-dot
+                        aria-label="Mostra l'ottava immagine"></button>
+            </div>
+            <button class="hero-carousel__arrow" type="button" data-carousel-next
+                    aria-label="Mostra l'immagine successiva">
+                <span aria-hidden="true">&#8594;</span>
+            </button>
+        </div>
+    </section>
+    <section class="container-w-n" aria-label="News e Whispers">
+        <div class="container-n" role="region" aria-labelledby="news-title">
+            <h2 id="news-title">News</h2>
+            <div class="wrap-n">
+                <div class="wrap-wn-items" id="wrap-n-items1">
+                    <div class="container-single-n">
+                        <div class="container-single-n-img">
+                            <img src="./images/news1.png" alt="Calciatori del Chelsea in campo">
+                        </div>
+                        <div class="container-n-descr">
+                            <p> Premier League: Chelsea a -3 dalla zona Europa. Alle 18.30 Newcastle-Manchester City
+                                La grande giornata di calcio si arricchisce con il programma della Premier League, oggi
+                                in scena con due sfide. Il Chelsea di Pochettino, alle 13.30, sconfigge il Fulham per
+                                1-0
+                                (rete di Palmer) e si porta a -3 dal 6° posto. Alle 18.30, big match fra Newcastle e
+                                Manchester
+                                City: Magpies per riavvicinarsi alla zona Europa, Citizens per non lasciare scappare il
+                                Liverpool
+                                in vetta (Reds attualmente a +5 sugli uomini di Guardiola).</p>
+                            <button class="news-expand" type="button" data-news-expand aria-expanded="false">Leggi tutto</button>
+                            <div class="container-n-descr1">
+                                <img src="./images/cheyenne-gouse.png" alt="">
+                                <p> Chyenne Gouse</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-single-n">
+                        <div class="container-single-n-img">
+                            <img src="./images/news2.png" alt="Calciatore della Roma in partita">
+                        </div>
+                        <div class="container-n-descr">
+                            <p>Alla vigilia della partita contro il Milan Josè Mourinho fa la conta degli assenti:
+                                "Davanti Azmoun
+                                è fuori, Dybala è fuori. E sono due in meno". Emergenza totale, per questo l'allenatore
+                                della Roma
+                                pesca nella Primavera: "Sarà convocato João Costa". Classe 2005, attaccante esterno -
+                                gioca a destra
+                                con piede mancino - che può fare anche il trequartista o la seconda punta, brasiliano
+                                con passaporto
+                                portoghese per le origini della madre.</p>
+                            <button class="news-expand" type="button" data-news-expand aria-expanded="false">Leggi tutto</button>
+                            <div class="container-n-descr1">
+                                <img src="images/cheyenne-gouse.png" alt="">
+                                <p> Chyenne Gouse</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-single-n">
+                        <div class="container-single-n-img">
+                            <img src="./images/news3.png" alt="Calciatori della Juventus in campo">
+                        </div>
+                        <div class="container-n-descr">
+                            <p>Juve: ottimismo per Chiesa, Rabiot a parte. Le ultime verso il Sassuolo
+                                Arrivano buone notizie per il tecnico della Juventus Massimiliano Allegri, in vista
+                                della sfida di
+                                martedì sera contro il Sassuolo. Secondo quanto riportato da Sky Sport, infatti, durante
+                                l'ultimo
+                                allenamento odierno, Federico Chiesa si è parzialmente allenato col gruppo a
+                                disposizione del tecnico
+                                livornese e, salvo sorprese dell'ultimo minuto, verrà convocato per la sfida contro i
+                                neroverdi di
+                                Dionisi.</p>
+                            <button class="news-expand" type="button" data-news-expand aria-expanded="false">Leggi tutto</button>
+                            <div class="container-n-descr1">
+                                <img src="./images/cheyenne-gouse.png" alt="">
+                                <p> Chyenne Gouse</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrap-wn-items" id="wrap-n-items2" hidden>
+                    <div class="container-single-n">
+                        <div class="container-single-n-img">
+                            <img src="./images/news4.png" alt="Ivan Toney in campo">
+                        </div>
+                        <div class="container-n-descr">
+                            <p>Toney, il Brentford vuole tenerselo stretto
+                                Ci sono molte voci che sostengono che l'attaccante Ivan Toney, voluto dall'Arsenal,
+                                lascerà il
+                                Brentford in questa sessione di mercato. Ma dal club inglese sono fiduciosi che non sia
+                                così.
+                                Lo ha affermato il secondo allenatore della squadra, Sam Saunders.</p>
+                            <button class="news-expand" type="button" data-news-expand aria-expanded="false">Leggi tutto</button>
+                            <div class="container-n-descr1">
+                                <img src="./images/cheyenne-gouse.png" alt="">
+                                <p> Chyenne Gouse</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-single-n">
+                        <div class="container-single-n-img">
+                            <img src="./images/news5.png" alt="Calciatore in campo">
+                        </div>
+                        <div class="container-n-descr">
+                            <p>Manchester United, nel mirino un giovane mediano dell'Anversa
+                                Secondo 'Football Insider', il Manchester United starebbe raccogliendo tutti i soldi per
+                                Arthur Vermeeren, 18enne centrocampista dell'Anversa. Il club belga chiede circa 30
+                                milioni di euro</p>
+                            <button class="news-expand" type="button" data-news-expand aria-expanded="false">Leggi tutto</button>
+                            <div class="container-n-descr1">
+                                <img src="./images/cheyenne-gouse.png" alt="">
+                                <p> Chyenne Gouse</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-single-n">
+                        <div class="container-single-n-img">
+                            <img src="./images/news6.png" alt="Cristiano Ronaldo in campo">
+                        </div>
+                        <div class="container-n-descr">
+                            <p>Cristiano Ronaldo è il miglior marcatore dell'annata, superati Kane e Mbappé. In top 10
+                                anche il giallorosso
+                                Romelu Lukaku.
+                                Non si smentisce Cristiano Ronaldo. Seppur in Arabia Saudita e lontano dal calcio che
+                                conta, il portoghese si è
+                                tolto una soddisfazione importante trionfando nel premio IFFHS di "Miglior marcatore
+                                maschile" del 2023.
+                                Il fuoriclasse, ormai 38enne, si è laureato anche in quest'occasione come bomber
+                                dell'annata. Per lui si tratta
+                                del quinto trionfo in questa speciale categoria, che in precedenza aveva vinto nel 2013,
+                                2014, 2016, 2017, 2019.</p>
+                            <button class="news-expand" type="button" data-news-expand aria-expanded="false">Leggi tutto</button>
+                            <div class="container-n-descr1">
+                                <img src="images/cheyenne-gouse.png" alt="">
+                                <p> Chyenne Gouse</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-wn-btn">
+                    <button class="news-altro-btn" id="btn-switch-n" type="button"
+                            aria-controls="wrap-n-items1 wrap-n-items2">Mostra altre</button>
+                </div>
+            </div>
+        </div>
+        <div class="container-w" role="region" aria-labelledby="whispers-title">
+            <h2 id="whispers-title">Whispers</h2>
+            <div class="wrap-w">
+
+                <div class="wrap-wn-items" id="wrap-w-items1">
+                    <div class="container-single-w">
+                        <div class="container-single-w-img">
+                            <img src="./images/saka-homepage.png" alt="Bukayo Saka con la maglia dell'Arsenal">
+                        </div>
+                        <p> Ancora un record per Saka è il quinto più giovane a raggiungere 150 presenze in premier
+                            league</p>
+                        <div class="container-w-descr">
+                            <img src="./images/cheyenne-gouse.png" alt="">
+                            <p> Chyenne Gouse</p>
+                        </div>
+                    </div>
+                    <div class="container-single-w">
+                        <div class="container-single-w-img">
+                            <img src="./images/goalkeeper-reach.png" alt="Portiere in elevazione vicino alla traversa">
+                        </div>
+                        <p> Secondo uno studio l'altezza dei portieri è aumentata con gli anni. Nello studio viene
+                            evidenziato...</p>
+                        <div class="container-w-descr">
+                            <img src="./images/cheyenne-gouse.png" alt="">
+                            <p> Chyenne Gouse</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrap-wn-items" id="wrap-w-items2" hidden>
+                    <div class="container-single-w">
+                        <div class="container-single-w-img">
+                            <img src="./images/whispers3.png" alt="Immagine della partita Napoli-Salernitana">
+                        </div>
+                        <p> Napoli-Salernitana si gioca sabato 13 gennaio 2024. Il calcio d'inizio è fissato alle ore
+                            15. La sfida sarà trasmessa in diretta su Dazn.</p>
+                        <div class="container-w-descr">
+                            <img src="./images/cheyenne-gouse.png" alt="">
+                            <p> Chyenne Gouse</p>
+                        </div>
+                    </div>
+                    <div class="container-single-w">
+                        <div class="container-single-w-img">
+                            <img src="./images/whisper4.png" alt="Immagine del Genoa">
+                        </div>
+                        <p>Il Genoa occupa attualmente la dodicesima posizione della classifica con ventuno punti.</p>
+                        <div class="container-w-descr">
+                            <img src="./images/cheyenne-gouse.png" alt="">
+                            <p> Chyenne Gouse</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-wn-btn">
+                    <button class="whisper-altro-btn" id="btn-switch-w" type="button"
+                            aria-controls="wrap-w-items1 wrap-w-items2">Mostra altri</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container-pp-rp" aria-label="Partite e risultati">
+        <div class="container-pp">
+            <h2 id="upcoming-matches-title">Prossime partite</h2>
+            <div class="wrap-pp" role="region" aria-labelledby="upcoming-matches-title" aria-live="polite" tabindex="0">
+                <div class="container-single-pp">
+                    <div class="single-pp">
+                        <p>13/01</p>
+                        <p>Arsenal</p>
+                    </div>
+                    <div class="single-pp">
+                        <p>16:00</p>
+                        <p>Wolverhampton</p>
+                    </div>
+                </div>
+                <div class="container-single-pp">
+                    <div class="single-pp">
+                        <p>13/01</p>
+                        <p>Burnley</p>
+                    </div>
+                    <div class="single-pp">
+                        <p>18:00</p>
+                        <p>Luton Town</p>
+                    </div>
+                </div>
+                <div class="container-single-pp">
+                    <div class="single-pp">
+                        <p>14/01</p>
+                        <p>Chelsea</p>
+                    </div>
+                    <div class="single-pp">
+                        <p>16:00</p>
+                        <p>Fulham</p>
+                    </div>
+                </div>
+                <div class="container-single-pp">
+                    <div class="single-pp">
+                        <p>14/01</p>
+                        <p>Newcastle United</p>
+                    </div>
+                    <div class="single-pp">
+                        <p>18:00</p>
+                        <p>Manchester City</p>
+                    </div>
+                </div>
+                <div class="container-single-pp">
+                    <div class="single-pp">
+                        <p>20/01</p>
+                        <p>Everton</p>
+                    </div>
+                    <div class="single-pp">
+                        <p>16:00</p>
+                        <p>Aston Villa</p>
+                    </div>
+                </div>
+                <div class="container-single-pp">
+                    <div class="single-pp">
+                        <p>20/01</p>
+                        <p>Manchester United</p>
+                    </div>
+                    <div class="single-pp">
+                        <p>18:00</p>
+                        <p>Tottenham</p>
+                    </div>
+                </div>
+                <div class="container-single-pp">
+                    <div class="single-pp">
+                        <p>21/01</p>
+                        <p>Arsenal</p>
+                    </div>
+                    <div class="single-pp">
+                        <p>16:00</p>
+                        <p>Crystal Palace</p>
+                    </div>
+                </div>
+                <div class="container-single-pp">
+                    <div class="single-pp">
+                        <p>21/01</p>
+                        <p>Brentford</p>
+                    </div>
+                    <div class="single-pp">
+                        <p>18:00</p>
+                        <p>Nottingham Forest</p>
+                    </div>
+                </div>
+                <div class="container-single-pp">
+                    <div class="single-pp">
+                        <p>27/01</p>
+                        <p>Sheffield United</p>
+                    </div>
+                    <div class="single-pp">
+                        <p>16:00</p>
+                        <p>West Ham</p>
+                    </div>
+                </div>
+                <div class="container-single-pp">
+                    <div class="single-pp">
+                        <p>27/01</p>
+                        <p>AFC Bournemouth</p>
+                    </div>
+                    <div class="single-pp">
+                        <p>18:00</p>
+                        <p>Liverpool</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-rp">
+            <h2 id="results-title">Risultati partite</h2>
+            <div class="wrap-rp" role="region" aria-labelledby="results-title" aria-live="polite" tabindex="0">
+                <div class="container-single-rp" id="matchContainer1">
+                    <div class="stadium-rp">
+                        <p id="stadio1"></p>
+                    </div>
+                    <div class="match-rp-risultato">
+                        <img src="images/arsenal.png" alt="logo squadra in casa" id="logo_squadra_casa1">
+                        <h2 id="risultato1"></h2>
+                        <img src="images/wolverhampton.png" alt="logo squadra fuori casa" id="logo_squadra_fuori_casa1">
+                    </div>
+                    <div class="match-rp">
+                        <div class="match-rp-team1" id="team1-1">
+                            <h2 id="nome_squadra_casa1"></h2>
+                        </div>
+                        <div class="match-rp-team2" id="team2-1">
+                            <h2 id="nome_squadra_fuori_casa1"></h2>
+                        </div>
+                    </div>
+                    <div class="scorer-rp">
+                        <p id="marcatori1"></p>
+                    </div>
+                </div>
+                <div class="container-single-rp" id="matchContainer2">
+                    <div class="stadium-rp">
+                        <p id="stadio2"></p>
+                    </div>
+                    <div class="match-rp-risultato">
+                        <img src="images/arsenal.png" alt="logo squadra in casa" id="logo_squadra_casa2">
+                        <h2 id="risultato2"></h2>
+                        <img src="images/wolverhampton.png" alt="logo squadra fuori casa" id="logo_squadra_fuori_casa2">
+                    </div>
+                    <div class="match-rp">
+                        <div class="match-rp-team1" id="team1-2">
+                            <h2 id="nome_squadra_casa2"></h2>
+                        </div>
+                        <div class="match-rp-team2" id="team2-2">
+                            <h2 id="nome_squadra_fuori_casa2"></h2>
+                        </div>
+                    </div>
+                    <div class="scorer-rp">
+                        <p id="marcatori2"></p>
+                    </div>
+                </div>
+                <div class="container-single-rp" id="matchContainer3">
+                    <div class="stadium-rp">
+                        <p id="stadio3"></p>
+                    </div>
+                    <div class="match-rp-risultato">
+                        <img src="images/arsenal.png" alt="logo squadra in casa" id="logo_squadra_casa3">
+                        <h2 id="risultato3"></h2>
+                        <img src="images/wolverhampton.png" alt="logo squadra fuori casa" id="logo_squadra_fuori_casa3">
+                    </div>
+                    <div class="match-rp">
+                        <div class="match-rp-team1" id="team1-3">
+                            <h2 id="nome_squadra_casa3"></h2>
+                        </div>
+                        <div class="match-rp-team2" id="team2-3">
+                            <h2 id="nome_squadra_fuori_casa3"></h2>
+                        </div>
+                    </div>
+                    <div class="scorer-rp">
+                        <p id="marcatori3"></p>
+                    </div>
+                </div>
+                <div class="container-single-rp" id="matchContainer4">
+                    <div class="stadium-rp">
+                        <p id="stadio4"></p>
+                    </div>
+                    <div class="match-rp-risultato">
+                        <img src="images/arsenal.png" alt="logo squadra in casa" id="logo_squadra_casa4">
+                        <h2 id="risultato4"></h2>
+                        <img src="images/wolverhampton.png" alt="logo squadra fuori casa" id="logo_squadra_fuori_casa4">
+                    </div>
+                    <div class="match-rp">
+                        <div class="match-rp-team1" id="team1-4">
+                            <h2 id="nome_squadra_casa4"></h2>
+                        </div>
+                        <div class="match-rp-team2" id="team2-4">
+                            <h2 id="nome_squadra_fuori_casa4"></h2>
+                        </div>
+                    </div>
+                    <div class="scorer-rp">
+                        <p id="marcatori4"></p>
+                    </div>
+                </div>
+                <div class="container-single-rp" id="matchContainer5">
+                    <div class="stadium-rp">
+                        <p id="stadio5"></p>
+                    </div>
+                    <div class="match-rp-risultato">
+                        <img src="images/arsenal.png" alt="logo squadra in casa" id="logo_squadra_casa5">
+                        <h2 id="risultato5"></h2>
+                        <img src="images/wolverhampton.png" alt="logo squadra fuori casa" id="logo_squadra_fuori_casa5">
+                    </div>
+                    <div class="match-rp">
+                        <div class="match-rp-team1" id="team1-5">
+                            <h2 id="nome_squadra_casa5"></h2>
+                        </div>
+                        <div class="match-rp-team2" id="team2-5">
+                            <h2 id="nome_squadra_fuori_casa5"></h2>
+                        </div>
+                    </div>
+                    <div class="scorer-rp">
+                        <p id="marcatori5"></p>
+                    </div>
+                </div>
+                <div class="container-single-rp" id="matchContainer6">
+                    <div class="stadium-rp">
+                        <p id="stadio6"></p>
+                    </div>
+                    <div class="match-rp-risultato">
+                        <img src="images/arsenal.png" alt="logo squadra in casa" id="logo_squadra_casa6">
+                        <h2 id="risultato6"></h2>
+                        <img src="images/wolverhampton.png" alt="logo squadra fuori casa" id="logo_squadra_fuori_casa6">
+                    </div>
+                    <div class="match-rp">
+                        <div class="match-rp-team1" id="team1-6">
+                            <h2 id="nome_squadra_casa6"></h2>
+                        </div>
+                        <div class="match-rp-team2" id="team2-6">
+                            <h2 id="nome_squadra_fuori_casa6"></h2>
+                        </div>
+                    </div>
+                    <div class="scorer-rp">
+                        <p id="marcatori6"></p>
+                    </div>
+                </div>
+                <div class="container-single-rp" id="matchContainer7">
+                    <div class="stadium-rp">
+                        <p id="stadio7"></p>
+                    </div>
+                    <div class="match-rp-risultato">
+                        <img src="images/arsenal.png" alt="logo squadra in casa" id="logo_squadra_casa7">
+                        <h2 id="risultato7"></h2>
+                        <img src="images/wolverhampton.png" alt="logo squadra fuori casa" id="logo_squadra_fuori_casa7">
+                    </div>
+                    <div class="match-rp">
+                        <div class="match-rp-team1" id="team1-7">
+                            <h2 id="nome_squadra_casa7"></h2>
+                        </div>
+                        <div class="match-rp-team2" id="team2-7">
+                            <h2 id="nome_squadra_fuori_casa7"></h2>
+                        </div>
+                    </div>
+                    <div class="scorer-rp">
+                        <p id="marcatori7"></p>
+                    </div>
+                </div>
+                <div class="container-single-rp" id="matchContainer8">
+                    <div class="stadium-rp">
+                        <p id="stadio8"></p>
+                    </div>
+                    <div class="match-rp-risultato">
+                        <img src="images/arsenal.png" alt="logo squadra in casa" id="logo_squadra_casa8">
+                        <h2 id="risultato8"></h2>
+                        <img src="images/wolverhampton.png" alt="logo squadra fuori casa" id="logo_squadra_fuori_casa8">
+                    </div>
+                    <div class="match-rp">
+                        <div class="match-rp-team1" id="team1-8">
+                            <h2 id="nome_squadra_casa8"></h2>
+                        </div>
+                        <div class="match-rp-team2" id="team2-8">
+                            <h2 id="nome_squadra_fuori_casa8"></h2>
+                        </div>
+                    </div>
+                    <div class="scorer-rp">
+                        <p id="marcatori8"></p>
+                    </div>
+                </div>
+                <div class="container-single-rp" id="matchContainer9">
+                    <div class="stadium-rp">
+                        <p id="stadio9"></p>
+                    </div>
+                    <div class="match-rp-risultato">
+                        <img src="images/arsenal.png" alt="logo squadra in casa" id="logo_squadra_casa9">
+                        <h2 id="risultato9"></h2>
+                        <img src="images/wolverhampton.png" alt="logo squadra fuori casa" id="logo_squadra_fuori_casa9">
+                    </div>
+                    <div class="match-rp">
+                        <div class="match-rp-team1" id="team1-9">
+                            <h2 id="nome_squadra_casa9"></h2>
+                        </div>
+                        <div class="match-rp-team2" id="team2-9">
+                            <h2 id="nome_squadra_fuori_casa9"></h2>
+                        </div>
+                    </div>
+                    <div class="scorer-rp">
+                        <p id="marcatori9"></p>
+                    </div>
+                </div>
+                <div class="container-single-rp" id="matchContainer10">
+                    <div class="stadium-rp">
+                        <p id="stadio10"></p>
+                    </div>
+                    <div class="match-rp-risultato">
+                        <img src="images/arsenal.png" alt="logo squadra in casa" id="logo_squadra_casa10">
+                        <h2 id="risultato10"></h2>
+                        <img src="images/wolverhampton.png" alt="logo squadra fuori casa"
+                             id="logo_squadra_fuori_casa10">
+                    </div>
+                    <div class="match-rp">
+                        <div class="match-rp-team1" id="team1-10">
+                            <h2 id="nome_squadra_casa10"></h2>
+                        </div>
+                        <div class="match-rp-team2" id="team2-10">
+                            <h2 id="nome_squadra_fuori_casa10"></h2>
+                        </div>
+                    </div>
+                    <div class="scorer-rp">
+                        <p id="marcatori10"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<footer class="site-footer" data-site-footer>
+    <div class="site-footer__main" id="site-footer-info">
+        <div class="site-footer__inner">
+            <section class="site-footer__column" aria-label="Football Whispers">
+                <h2>Football Whispers</h2>
+                <p>Statistiche di giocatori e squadre, con pronostici.</p>
+            </section>
+            <section class="site-footer__column" aria-label="Social">
+                <h2>Social</h2>
+                <p class="site-footer__social"><span>Facebook</span><span>Instagram</span><span>Twitter</span></p>
+            </section>
+            <section class="site-footer__column" aria-label="Contatti">
+                <h2>Contatti</h2>
+                <address>
+                    <span>Via Roma 2, Torino, TO 10100, IT</span>
+                    <span class="site-footer__contact-links">
+                        <a href="mailto:info@footballwhispers.com">info@footballwhispers.com</a>
+                        <a href="tel:+393473085745">+39 347 3085745</a>
+                    </span>
+                </address>
+            </section>
+        </div>
+    </div>
+    <div class="site-footer__bottom">
+        <button class="site-footer__toggle" type="button" aria-label="Informazioni e contatti"
+                aria-controls="site-footer-info" aria-expanded="false">Info</button>
+        <small>© 2024 <strong>Football Whispers</strong><span class="site-footer__divider" aria-hidden="true">·</span>footballwhispers.com</small>
+    </div>
+</footer>
+</body>
+</html>
